@@ -25,6 +25,7 @@ public class Chess {
 	public static ReturnPlay play(String move) {
 
 		/* FILL IN THIS METHOD */
+		move = move.trim(); 
 		ReturnPlay result = new ReturnPlay();
 		// just testing if it moves 
 		String[] moveSplit = move.split(" ");
@@ -49,17 +50,32 @@ public class Chess {
 			return result; 
 		}	
 
+		// turn order check
+		boolean isWhite = piece.pieceType.toString().charAt(0) == 'W';
+		if ((curTurn == Player.white && !isWhite) || (curTurn == Player.black && isWhite)){
+			result.piecesOnBoard = getPieces(); 
+			result.message = ReturnPlay.Message.ILLEGAL_MOVE; 
+			return result;
+		}
+		curTurn = curTurn == Player.white ? Player.black : Player.white;
+
+		// prevent taking your own piece, illegal move check
+		ReturnPiece desPiece = board[desRow][desCol];
+		if (desPiece != null){
+			boolean isDesWhite = desPiece.pieceType.toString().charAt(0) == 'W';
+			if ((isWhite && isDesWhite) || (!isWhite && !isDesWhite)){
+				result.piecesOnBoard = getPieces(); 
+				result.message = ReturnPlay.Message.ILLEGAL_MOVE; 
+				return result;
+			}
+		}
+
 		// check if the move is legal for the piece type, illegal move check
 		if (!MoveRules.isLegal(board, piece, srcRow, srcCol, desRow, desCol)) {
 			result.piecesOnBoard = getPieces(); 
 			result.message = ReturnPlay.Message.ILLEGAL_MOVE; 
 			return result; 
 		}
-
-
-		// avoid taking your own piece FILL IN!!
-		
-		// create turn order FILL IN!!
 
 		// switching turns FILL IN!!
 
@@ -81,6 +97,7 @@ public class Chess {
 		
 		/* FOLLOWING LINE IS A PLACEHOLDER TO MAKE COMPILER HAPPY */
 		/* WHEN YOU FILL IN THIS METHOD, YOU NEED TO RETURN A ReturnPlay OBJECT */
+	
 	}
 	
 	// helper method to make pieces for start() method
