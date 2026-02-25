@@ -26,6 +26,53 @@ public class Chess {
 
 		/* FILL IN THIS METHOD */
 		ReturnPlay result = new ReturnPlay();
+		// just testing if it moves 
+		String[] moveSplit = move.split(" ");
+
+		//parse 
+		char srcFile = moveSplit[0].charAt(0);
+		int srcRank = moveSplit[0].charAt(1);
+		char desFile = moveSplit[1].charAt(0);
+		char desRank = moveSplit[1].charAt(1);
+
+		int srcRow = 8 - (srcRank - '0');
+		int srcCol = srcFile - 'a';
+		int desRow = 8 - (desRank - '0');
+		int desCol = desFile - 'a';
+
+		ReturnPiece piece = board[srcRow][srcCol];
+
+		// check if there is a piece at source, illegal move check 
+		if (piece == null){
+			result.piecesOnBoard = getPieces(); 
+			result.message = ReturnPlay.Message.ILLEGAL_MOVE; 
+			return result; 
+		}	
+
+		// check if the move is legal for the piece type, illegal move check
+		if (!MoveRules.isLegal(board, piece, srcRow, srcCol, desRow, desCol)) {
+			result.piecesOnBoard = getPieces(); 
+			result.message = ReturnPlay.Message.ILLEGAL_MOVE; 
+			return result; 
+		}
+
+
+		// avoid taking your own piece FILL IN!!
+		
+		// create turn order FILL IN!!
+
+		// switching turns FILL IN!!
+
+		if (piece != null) {
+			board[desRow][desCol] = piece;
+			board[srcRow][srcCol] = null;
+
+			//update stored locatoin for the piece
+			piece.pieceFile = ReturnPiece.PieceFile.valueOf(String.valueOf(desFile));
+			piece.pieceRank = Character.getNumericValue(desRank);
+
+		}
+
 		// FILL IN 
 
 		result.piecesOnBoard = getPieces();
