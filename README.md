@@ -1,15 +1,15 @@
 ﻿# Chess-CLI
 
-Terminal-based two-player chess implementation for the Rutgers Software Methodology assignment.
+Terminal-based two-player chess implementation in Java.
 
 ## Overview
 
-This project implements chess game state and move execution in Java, centered around:
+This project implements chess game state and move execution around:
 
 - `chess.Chess.start()` to initialize/reset the board
 - `chess.Chess.play(String move)` to apply one move and return a `ReturnPlay` result
 
-The game logic is built to match autograder expectations by returning board structures and message enums (`ILLEGAL_MOVE`, `CHECK`, `CHECKMATE_*`, `DRAW`, `RESIGN_*`) rather than relying on terminal output.
+The core logic returns structured game state (`piecesOnBoard` + `message`) instead of relying on printed output.
 
 ## Implemented Rules
 
@@ -34,7 +34,7 @@ The game logic is built to match autograder expectations by returning board stru
 chess/
   Chess.java
   MoveRules.java
-  PlayChess.java          (local testing helper; not needed by autograder)
+  PlayChess.java          (local testing helper)
   ReturnPiece.java
   ReturnPlay.java
 README.md
@@ -64,17 +64,8 @@ Special formats:
 - Draw offer: `g1 f3 draw?`
 - Resign: `resign`
 
-## Submission Notes (Class-Specific)
+## Notes
 
-- Submit only source files in package folder `chess/`.
-- Do not submit:
-  - `PlayChess.java`
-  - `ReturnPlay.java`
-  - `ReturnPiece.java`
-  - Any `.class` files
-- Zip required source files as `chess.zip` with directory structure preserved.
-
-## Development Notes
-
-- Autolab target is Java 21.
-- Local testing in this repo has been done with PlayChess plus structure-level result checks.
+- `Chess.start()` resets the board to the initial position.
+- `Chess.play(String move)` applies a single move and returns the resulting game state.
+- Compiled `.class` files are build artifacts and should not be committed.
