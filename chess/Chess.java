@@ -1,3 +1,5 @@
+// Joffre Loor and Mahek Kadakia
+
 package chess;
 
 import java.util.ArrayList;
